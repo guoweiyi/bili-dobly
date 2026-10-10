@@ -1,0 +1,32 @@
+# Runtime and local media/session data
+.venv/
+venv/
+__pycache__/
+*.py[cod]
+.DS_Store
+build/
+*.app/
+apple_media_inspect
+apple_display_inspect
+*.mp4
+*.m4a
+*.mkv
+*.mov
+*.eac3
+*.hevc
+*.part
+*.aria2
+.streams/
+批量下载/
+downloads/
+# Manifests contain expiring access URLs; reports may identify local paths.
+*.json
+safari_batch.generated.js
+cookies*
+*cookie*.txt
+*.env
+.env*
+bvs.txt
+videos.txt
+# Explicitly reviewed static fixture JSON can be tracked here if introduced.
+!tests/fixtures/*.json

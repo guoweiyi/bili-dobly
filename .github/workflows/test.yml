@@ -1,0 +1,36 @@
+name: Tests
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  python:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.10', '3.12', '3.14']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: ${{ matrix.python }}
+      - run: sudo apt-get update && sudo apt-get install -y ffmpeg
+      - run: python -m pip install -r requirements.txt
+      - run: python -B -m unittest discover -v
+      - run: python doctor.py --json
+      - run: python bili_batch.py --help
+  apple-tools:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      - run: bash scripts/build_apple_tools.sh
+      - run: build/DolbyVisionCompare.app/Contents/MacOS/DolbyVisionCompare --help
